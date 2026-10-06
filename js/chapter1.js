@@ -1,5 +1,5 @@
 /**
- * 邺山迷踪 · 第一章 回村
+ * 云岭迷踪 · 第一章 回村
  */
 
 // ===== 游戏状态 =====
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $('title-card').classList.add('hide');
         showStage('stage-village');
         setTimeout(() => {
-            caption('四个小时的长途车。山越来越近——邺山村，我回来了。阿杰，你说的"三楼窗户上有答案"，我来了。');
+            caption('四个小时的长途车。山越来越近——云岭村，我回来了。阿杰，你说的"三楼窗户上有答案"，我来了。');
         }, 1200);
     }, 3000);
 

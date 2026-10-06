@@ -1,5 +1,5 @@
 /**
- * 邺山迷踪 - 序章交互脚本
+ * 云岭迷踪 - 序章交互脚本
  */
 
 // ===== 状态管理 =====
@@ -132,7 +132,7 @@ function runEndingSequence() {
         { text: '在吗', type: 'received', delay: 500 },
         { text: '有个事想跟你说', type: 'received', delay: 1500 },
         { text: '？？怎么了', type: 'sent', delay: 3000 },
-        { text: '我要去邺山村一趟', type: 'received', delay: 4500 },
+        { text: '我要去云岭村一趟', type: 'received', delay: 4500 },
         { text: '那边有些事要处理', type: 'received', delay: 5500 },
         { text: '什么？？那个废弃的学校？', type: 'sent', delay: 7000 },
         { text: '嗯', type: 'received', delay: 8500 },
