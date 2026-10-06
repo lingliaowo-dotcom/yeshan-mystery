@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山迷踪 · 番外篇 2011 · 他没有转学</title>
+    <link rel="stylesheet" href="css/chapter1.css">
+    <link rel="stylesheet" href="css/extra.css">
+</head>
+<body>
+    <!-- 番外标题卡 -->
+    <div id="title-card">
+        <div class="chapter-num">番外篇 · 2011</div>
+        <div class="chapter-name">他没有转学</div>
+    </div>
+
+    <div id="game">
+        <!-- 物品栏 -->
+        <div id="inventory-bar">
+            <span class="inv-title">物品</span>
+            <div id="inventory"></div>
+        </div>
+
+        <!-- 底部叙述栏 -->
+        <div id="caption-bar">
+            <p id="caption"></p>
+        </div>
+
+        <!-- ===== 场景：放学后的教室 ===== -->
+        <section class="stage" id="stage-classroom">
+            <img class="stage-bg" src="img/36.jpg" alt="放学后的教室">
+            <div class="hotspot" id="hs-window-view" style="left:70%;top:38%;">
+                <div class="dot"></div><div class="label">窗户</div>
+            </div>
+            <div class="hotspot" id="hs-roster" style="left:16%;top:40%;">
+                <div class="dot"></div><div class="label">值日表</div>
+            </div>
+            <div class="hotspot" id="hs-desk" style="left:42%;top:62%;">
+                <div class="dot"></div><div class="label">我的课桌</div>
+            </div>
+            <div class="hotspot" id="hs-diary" style="left:58%;top:24%;">
+                <div class="dot"></div><div class="label">日记本（窗台上）</div>
+            </div>
+            <div class="hotspot" id="hs-schoolbag" style="left:87%;top:64%;">
+                <div class="dot"></div><div class="label">我的书包</div>
+            </div>
+            <div class="hotspot" id="hs-xiaoman-desk" style="left:28%;top:48%;">
+                <div class="dot"></div><div class="label">小满的课桌</div>
+            </div>
+            <div class="hotspot nav hidden" id="hs-to-corridor" style="left:47%;top:85%;">
+                <div class="nav-label">去走廊 →</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：潜行走廊（互动层） ===== -->
+        <section class="stage stealth-stage" id="stage-stealth">
+            <img class="stage-bg old-photo" src="img/05.jpg" alt="昏暗走廊">
+            <div id="stealth-ui">
+                <div id="beam"></div>
+                <div id="player-mark">我</div>
+                <div class="cover-point" style="left:12%;">教室门</div>
+                <div class="cover-point" style="left:46%;">宣传栏</div>
+                <div class="cover-point" style="left:80%;">楼梯口</div>
+                <button id="btn-move">趁黑移动 ↑</button>
+                <p id="stealth-tip">灯在来回晃。等光圈离开你这侧，再移动。</p>
+            </div>
+        </section>
+
+        <!-- ===== 场景：仓库 2011 ===== -->
+        <section class="stage" id="stage-storage-old">
+            <img class="stage-bg old-photo" src="img/13.jpg" alt="学校仓库">
+            <div class="hotspot" id="hs-ironbox" style="left:30%;top:55%;">
+                <div class="dot"></div><div class="label">生锈铁盒</div>
+            </div>
+            <div class="hotspot" id="hs-floorcrack" style="left:62%;top:70%;">
+                <div class="dot"></div><div class="label">地板裂缝</div>
+            </div>
+            <div class="hotspot nav hidden" id="hs-to-third-floor" style="left:47%;top:85%;">
+                <div class="nav-label">摸黑回三楼 →</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：三楼西窗 2011 ===== -->
+        <section class="stage" id="stage-window-old">
+            <img class="stage-bg old-photo nightier" src="img/06.jpg" alt="三楼西窗">
+            <div class="hotspot" id="hs-engrave" style="left:50%;top:45%;">
+                <div class="dot"></div><div class="label">窗玻璃（用圆规刻字）</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：墙根·结局 ===== -->
+        <section class="stage hidden" id="stage-wall-end">
+            <img class="stage-bg" src="img/39.jpg" alt="墙根第三棵槐树">
+        </section>
+    </div>
+
+    <!-- 闪帧图 -->
+    <div id="flash-frame"><img src="img/40.jpg" alt=""></div>
+
+    <!-- ===== 弹窗：窗外目击 ===== -->
+    <div class="modal hidden" id="modal-view">
+        <div class="modal-paper">
+            <img src="img/37.jpg" alt="窗外墙根" class="modal-photo">
+            <p class="modal-text">……第三棵槐树下，两个人在挖坑。穿蓝衣服。<br>他们把一个长条的东西放了进去，填上土。<br>其中一个人忽然抬头，朝窗户看了一眼。<br>我赶紧蹲下。心跳得像要从嗓子里蹦出来。</p>
+            <button class="modal-close">离开窗边</button>
+        </div>
+    </div>
+
+    <!-- ===== 弹窗：值日表（刮名字） ===== -->
+    <div class="modal hidden" id="modal-roster">
+        <div class="modal-paper">
+            <h3>1998级2班 值日表</h3>
+            <ul id="roster-list">
+                <li data-row="0">李志强　扫地</li>
+                <li data-row="1">王　芳　擦窗</li>
+                <li data-row="2">赵　磊　提水</li>
+                <li data-row="3" id="my-row">周小树　擦黑板</li>
+            </ul>
+            <p class="modal-text" id="roster-hint">用圆规把"小树"两个字刮掉……只留下姓。这样他们以为我转学了，别人却还能顺着找。</p>
+            <button class="modal-close" id="roster-close">贴回墙上</button>
+        </div>
+    </div>
+
+    <!-- ===== 弹窗：课桌 ===== -->
+    <div class="modal hidden" id="modal-desk">
+        <div class="modal-paper">
+            <p class="modal-text">课桌肚里有：<br>· 一把铁<strong>圆规</strong>，尖儿很利，能刻东西。<br>· 我最宝贝的<strong>玻璃弹珠</strong>，里面有一圈红纹。<br>脖子上还挂着奶奶在老槐树下求来的<strong>红布符</strong>，里面包着一点朱砂。<br>今早出门前，奶奶拽着我的袖子说：“树儿，今天铃一响就往家跑，哪儿都别去。”</p>
+            <button class="modal-close" id="desk-close">收进口袋</button>
+        </div>
+    </div>
+
+    <!-- ===== 弹窗：日记本（5页可翻） ===== -->
+    <div class="modal hidden" id="modal-diary">
+        <div class="modal-paper diary-paper">
+            <div class="diary-date" id="diary-date"></div>
+            <p class="diary-body" id="diary-body"></p>
+            <div class="diary-controls">
+                <button id="diary-prev">← 上一页</button>
+                <span id="diary-page"></span>
+                <button id="diary-next">下一页 →</button>
+            </div>
+            <button class="modal-close" id="diary-close">合上日记本</button>
+        </div>
+    </div>
+
+    <!-- ===== 弹窗：书包·全家福 ===== -->
+    <div class="modal hidden" id="modal-schoolbag">
+        <div class="modal-paper">
+            <img src="img/42.jpg" alt="全家福" class="modal-photo">
+            <p class="modal-text">书包最里层，夹着一张卷边的全家福：我站在爸妈中间，一只手被爸爸牵着，一只手被妈妈牵着。那年我五岁，家门口的槐树还没长过院墙。<br>照片背面是奶奶托小卖部老板娘写的字：<br><strong>『树儿，别怕。』</strong><br>还有半块红薯，用手帕包着——摸上去，还是温的。</p>
+            <button class="modal-close" id="schoolbag-close">放回书包</button>
+        </div>
+    </div>
+
+    <!-- ===== 弹窗：小满的课桌（蜡笔画+字条） ===== -->
+    <div class="modal hidden" id="modal-xiaoman">
+        <div class="modal-paper">
+            <h3>林小满的课桌</h3>
+            <!-- 儿童蜡笔画：两个小人手拉手，槐树，蓝色围墙 -->
+            <svg viewBox="0 0 400 230" class="crayon-drawing">
+                <rect x="0" y="180" width="400" height="50" fill="#9bb07a"/>
+                <rect x="0" y="120" width="400" height="60" fill="#c9d6df"/>
+                <!-- 槐树 -->
+                <ellipse cx="330" cy="80" rx="48" ry="58" fill="#6f9c5f"/>
+                <rect x="322" y="110" width="14" height="70" fill="#8a6a44"/>
+                <!-- 小人1（小满） -->
+                <circle cx="120" cy="120" r="16" fill="#f0c9a0" stroke="#333" stroke-width="2"/>
+                <rect x="108" y="136" width="24" height="34" fill="#e28e5f"/>
+                <line x1="120" y1="170" x2="120" y2="196" stroke="#333" stroke-width="3"/>
+                <line x1="120" y1="148" x2="96" y2="158" stroke="#333" stroke-width="3"/>
+                <!-- 小人2（小树，矮一点） -->
+                <circle cx="178" cy="128" r="13" fill="#f0c9a0" stroke="#333" stroke-width="2"/>
+                <rect x="168" y="141" width="20" height="28" fill="#5f87b0"/>
+                <line x1="178" y1="169" x2="178" y2="196" stroke="#333" stroke-width="3"/>
+                <line x1="178" y1="150" x2="200" y2="158" stroke="#333" stroke-width="3"/>
+                <!-- 牵着的手 -->
+                <line x1="96" y1="158" x2="200" y2="158" stroke="#333" stroke-width="3"/>
+                <!-- 太阳 -->
+                <circle cx="50" cy="45" r="18" fill="#f2d062"/>
+            </svg>
+            <div class="xm-note">
+                <p>画的背面，铅笔字歪歪扭扭：</p>
+                <p class="xm-handwrite">小树：<br>我要是明天没来上学，<br>你别信他们说的转学。<br>我哪儿也不会去。<br>我要是真的没回来——<br>你就把这话告诉别人。<br><span class="xm-sign">林小满　11月6日</span></p>
+            </div>
+            <button class="modal-close" id="xiaoman-close">把画放回课桌</button>
+        </div>
+    </div>
+
+    <!-- ===== 弹窗：铁盒（拼检讨书） ===== -->
+    <div class="modal hidden" id="modal-ironbox">
+        <div class="modal-paper">
+            <h3>写一张"检讨书"</h3>
+            <p class="modal-text">真的话不能明写。按顺序点字，把话藏进去：</p>
+            <div id="word-tiles">
+                <span>我</span><span>不</span><span>该</span><span>看</span><span>见</span><span>。</span>
+                <span class="distract">听</span><span class="distract">喊</span>
+                <span>我</span><span>不</span><span>该</span><span>说</span><span>。</span>
+                <span class="distract">跑</span>
+            </div>
+            <div id="sentence-line"></div>
+            <button class="modal-close" id="ironbox-close">盖好铁盒</button>
+        </div>
+    </div>
+
+    <!-- ===== 弹窗：地板裂缝（藏弹珠） ===== -->
+    <div class="modal hidden" id="modal-crack">
+        <div class="modal-paper">
+            <h3>地板裂缝</h3>
+            <p class="modal-text">裂缝下面黑黢黢的，是个地下室。<br>把弹珠放进小铁罐，用圆规在罐底刻一个字。</p>
+            <div id="tin-scratch">刻「<strong id="tin-char">　</strong>」（连点 3 下）</div>
+            <button id="btn-drop-tin" disabled>把铁罐顺着裂缝丢下去</button>
+            <button class="modal-close" id="crack-close">先不弄了</button>
+        </div>
+    </div>
+
+    <!-- ===== 奶奶叙述卡（闪帧后） ===== -->
+    <div id="granny-card" class="hidden">
+        <div class="granny-inner">
+            <p id="granny-text"></p>
+        </div>
+    </div>
+
+    <!-- ===== 番外收尾卡 ===== -->
+    <div id="coda-card" class="hidden">
+        <div class="coda-inner">
+            <img class="coda-photo" src="img/38.jpg" alt="周小树">
+            <p>2011 年 11 月，邺山小学。</p>
+            <p>周小树没有转学。</p>
+            <p class="coda-small">他把话藏进了值日表、铁盒、地板下、窗玻璃。</p>
+            <p class="coda-small">十一年后，有人顺着这些话找到了他——<br>那个消失在 2011 年秋天的孩子，终于可以回家。</p>
+            <div class="coda-btns">
+                <button onclick="location.href='chapter3.html'">返回第三章</button>
+                <button onclick="location.href='index.html'">从头开始</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/extra.js"></script>
+</body>
+</html>

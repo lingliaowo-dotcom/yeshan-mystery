@@ -1,0 +1,53 @@
+/* ===== 第三章 墙里的人 · 增量样式 ===== */
+
+/* 标题卡：晨雾中的老墙 */
+#title-card {
+    background:
+        linear-gradient(rgba(5,5,8,0.6), rgba(5,5,8,0.9)),
+        url('img/28.jpg') center/cover no-repeat;
+}
+
+/* 结尾卡：黎明 */
+#end-card {
+    background:
+        linear-gradient(rgba(5,5,8,0.8), rgba(5,5,8,0.94)),
+        url('img/29.jpg') center/cover no-repeat;
+}
+
+/* 笔记本弹窗 */
+.note-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    max-width: 92vw;
+}
+
+.note-page {
+    background: #e0d7c2;
+    color: #2c2620;
+    font-family: "Kaiti SC", "KaiTi", serif;
+    width: min(520px, 88vw);
+    padding: 32px 34px;
+    transform: rotate(-0.8deg);
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.6);
+    line-height: 2;
+    font-size: 15px;
+}
+
+.note-page p { margin-bottom: 10px; }
+
+.note-blood {
+    color: #6e2a1a;
+    font-size: 13px;
+}
+
+/* 对质场景：压得更冷 */
+#stage-confront .stage-bg {
+    filter: brightness(0.82) saturate(0.75);
+}
+
+/* 黎明场景：整体提亮 */
+#stage-dawn .stage-bg {
+    filter: brightness(1.05);
+}

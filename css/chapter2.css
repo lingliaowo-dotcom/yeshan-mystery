@@ -1,0 +1,66 @@
+/* ===== 第二章 村夜 · 增量样式（复用 chapter1.css） ===== */
+
+/* 标题卡：深夜村庄 */
+#title-card {
+    background:
+        linear-gradient(rgba(2,2,6,0.65), rgba(2,2,6,0.9)),
+        url('img/26.jpg') center/cover no-repeat;
+}
+
+/* 结尾卡：巷夜 */
+#end-card {
+    background:
+        linear-gradient(rgba(2,2,5,0.85), rgba(2,2,5,0.96)),
+        url('img/27.jpg') center/cover no-repeat;
+}
+
+/* 老校长家：油灯暖光晕 */
+#stage-room::after {
+    background: radial-gradient(ellipse at 50% 58%, rgba(255, 170, 60, 0.14) 0%, rgba(0, 0, 0, 0.55) 60%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+/* 手电遮罩（class 版，仓库/地下室各一个） */
+.dark-mask {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: radial-gradient(
+        circle 170px at var(--mx, 50%) var(--my, 50%),
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.55) 45%,
+        rgba(0, 0, 0, 0.97) 100%
+    );
+}
+
+/* 地下室：光圈更小、黑暗更浓 */
+.dark-mask.darker {
+    background: radial-gradient(
+        circle 110px at var(--mx, 50%) var(--my, 50%),
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.7) 45%,
+        rgba(0, 0, 0, 0.985) 100%
+    );
+}
+
+/* 追逐闪帧 */
+#chase-flash {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 710;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+#chase-flash.show {
+    opacity: 1;
+}
+
+/* 夜晚场景整体再压暗一点 */
+.stage .stage-bg {
+    filter: brightness(0.9);
+}

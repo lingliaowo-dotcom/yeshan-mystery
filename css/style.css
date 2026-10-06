@@ -1,0 +1,672 @@
+/* ===== 基础重置与全局样式 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #0a0a0f;
+    --bg-phone: #1a1a24;
+    --text-main: #e0e0e0;
+    --text-dim: #888;
+    --accent-red: #c0392b;
+    --accent-orange: #e67e22;
+    --weibo-red: #e6162d;
+    --weibo-bg: #f5f5f5;
+    --shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== 场景系统 ===== */
+.scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scene.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ===== 手机框架 ===== */
+.phone-frame {
+    width: 360px;
+    height: 700px;
+    background: var(--bg-phone);
+    border-radius: 36px;
+    border: 3px solid #333;
+    box-shadow: var(--shadow), inset 0 0 20px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-size: 12px;
+    color: var(--text-dim);
+    background: rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+/* ===== 场景1：手机桌面 ===== */
+.desktop {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+    background:
+        linear-gradient(135deg, rgba(26,26,46,0.55) 0%, rgba(10,10,20,0.78) 100%),
+        url('img/22.jpg') center/cover no-repeat;
+}
+
+.app-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    animation: float 3s ease-in-out infinite;
+}
+
+.app-icon:hover {
+    transform: scale(1.05);
+}
+
+.app-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+.app-logo.weibo {
+    background: linear-gradient(135deg, #e6162d, #ff6b6b);
+    box-shadow: 0 4px 15px rgba(230,22,45,0.4);
+}
+
+.app-icon span {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+.hint-text {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: var(--text-dim);
+    opacity: 0.7;
+    animation: pulse 2s infinite;
+    text-align: center;
+    width: 80%;
+}
+
+/* ===== 场景2：微博热搜 ===== */
+.weibo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #fff;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.back-btn, .refresh-btn {
+    font-size: 18px;
+    cursor: pointer;
+    width: 30px;
+    text-align: center;
+}
+
+.weibo-logo {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.hot-search-list {
+    flex: 1;
+    background: #fff;
+    overflow-y: auto;
+    padding: 8px 0;
+}
+
+.hot-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.hot-item:hover {
+    background: #f8f8f8;
+}
+
+.rank {
+    width: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #999;
+    text-align: center;
+}
+
+.rank-1 .rank { color: #fe2d46; }
+.rank-2 .rank { color: #f60; }
+.rank-3 .rank { color: #faa90e; }
+
+.title {
+    flex: 1;
+    font-size: 15px;
+    color: #333;
+    margin-left: 12px;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #fff;
+    background: #999;
+}
+
+.tag.hot { background: #fe2d46; }
+.tag.new { background: #ff8200; }
+
+#target-news {
+    animation: highlight 2s infinite;
+}
+
+/* ===== 场景3：新闻详情 ===== */
+.news-content {
+    flex: 1;
+    background: #fff;
+    color: #333;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.news-title {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.news-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 16px;
+}
+
+.news-body p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 12px;
+    text-align: justify;
+}
+
+.news-image-container {
+    margin: 16px 0;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.news-image-container:hover {
+    transform: scale(1.02);
+}
+
+.news-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    background: #2a2a35;
+}
+
+.image-caption {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+/* ===== 场景4：照片放大 ===== */
+.image-zoom-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.zoom-image {
+    width: 320px;
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: zoom-in;
+}
+
+.zoom-image.zoomed {
+    transform: scale(2.2) translate(-18%, 14%);
+    cursor: zoom-out;
+}
+
+.zoom-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.red-circle-hint {
+    position: absolute;
+    bottom: 12%;
+    right: 8%;
+    width: 60px;
+    height: 90px;
+    border: 3px solid #e74c3c;
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse-circle 1.5s infinite;
+    cursor: pointer;
+}
+
+.red-circle-hint.visible {
+    opacity: 1;
+}
+
+.zoom-hint {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-dim);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.zoom-hint.show {
+    opacity: 1;
+}
+
+.close-zoom {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.2s;
+}
+
+.close-zoom:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ===== 场景5：发现线索 ===== */
+.clue-discovery {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-dark);
+    padding: 20px;
+}
+
+.clue-image {
+    width: 300px;
+    height: 400px;
+    position: relative;
+    margin-bottom: 30px;
+    animation: clue-shake 0.6s ease;
+}
+
+.clue-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    box-shadow: 0 0 40px rgba(192,57,43,0.35);
+}
+
+@keyframes clue-shake {
+    0% { transform: scale(0.85); opacity: 0; filter: blur(8px); }
+    100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+.clue-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-main);
+    text-align: center;
+    max-width: 320px;
+    min-height: 60px;
+}
+
+/* ===== 场景6：记忆闪回 ===== */
+.memory-flashback {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.flashback-layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: grayscale(80%) contrast(1.2) blur(3px);
+    transition: filter 3s ease, transform 30s linear;
+    transform: scale(1);
+}
+
+.flashback-layer.clear {
+    filter: grayscale(20%) contrast(1.05) blur(0px);
+    transform: scale(1.12);
+}
+
+.memory-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.memory-text {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    z-index: 10;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    max-width: 80%;
+    min-height: 60px;
+}
+
+.vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* ===== 场景7：悬念收尾 ===== */
+.ending-sequence {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background:
+        linear-gradient(rgba(7,7,11,0.82), rgba(7,7,11,0.94)),
+        url('img/25.jpg') center/cover no-repeat;
+    position: relative;
+}
+
+.fade-from-white {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+    transition: opacity 2s ease;
+}
+
+.fade-from-white.active {
+    opacity: 1;
+}
+
+.final-phone {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 1s ease;
+}
+
+.final-phone.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.chat-interface {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f5f5f5;
+}
+
+.chat-header {
+    padding: 12px;
+    background: #fff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chat-msg {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: msg-pop 0.3s ease;
+}
+
+.chat-msg.sent {
+    align-self: flex-end;
+    background: #95ec69;
+    color: #333;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-msg.received {
+    align-self: flex-start;
+    background: #fff;
+    color: #333;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.typing-indicator {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #999;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.typing-indicator.show {
+    opacity: 1;
+}
+
+.final-choice {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 100%);
+    text-align: center;
+    z-index: 20;
+}
+
+.final-choice p {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+}
+
+.final-message {
+    font-size: 18px !important;
+    color: var(--accent-red) !important;
+    text-shadow: 0 0 10px rgba(192,57,43,0.3);
+    line-height: 1.6;
+}
+
+.choice-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.choice-btn {
+    padding: 12px 32px;
+    border: 2px solid var(--text-dim);
+    background: transparent;
+    color: var(--text-main);
+    border-radius: 24px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.choice-btn:hover {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+    background: rgba(192,57,43,0.1);
+}
+
+/* ===== 动画 ===== */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes highlight {
+    0%, 100% { background: transparent; }
+    50% { background: rgba(255,200,0,0.1); }
+}
+
+@keyframes pulse-circle {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes msg-pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s ease;
+}
+
+/* 闪回特效 */
+@keyframes flash-white {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.flash-white {
+    animation: flash-white 0.8s ease;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 400px) {
+    .phone-frame {
+        width: 95vw;
+        height: 90vh;
+        border-radius: 24px;
+    }
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山迷踪 · 第三章 墙里的人</title>
+    <link rel="stylesheet" href="css/chapter1.css">
+    <link rel="stylesheet" href="css/chapter2.css">
+    <link rel="stylesheet" href="css/chapter3.css">
+</head>
+<body>
+    <!-- 章节标题卡 -->
+    <div id="title-card">
+        <div class="chapter-num">第三章</div>
+        <div class="chapter-name">墙里的人</div>
+    </div>
+
+    <div id="game">
+        <!-- 物品栏 -->
+        <div id="inventory-bar">
+            <span class="inv-title">物品</span>
+            <div id="inventory"></div>
+        </div>
+
+        <!-- 底部叙述栏 -->
+        <div id="caption-bar">
+            <p id="caption"></p>
+        </div>
+
+        <!-- ===== 场景：牛棚藏身 ===== -->
+        <section class="stage" id="stage-hide">
+            <img class="stage-bg" src="img/17.jpg" alt="牛棚藏身">
+            <div class="hotspot" id="hs-notebook" style="left:45%;top:62%;">
+                <div class="dot"></div><div class="label">阿杰的笔记本</div>
+            </div>
+            <div class="hotspot" id="hs-outside" style="left:78%;top:40%;">
+                <div class="dot"></div><div class="label">板缝外的村子</div>
+            </div>
+            <div class="hotspot nav hidden" id="hs-to-wall" style="left:47%;top:84%;">
+                <div class="nav-label">去学校后墙 →</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：学校后墙 ===== -->
+        <section class="stage" id="stage-wall">
+            <img class="stage-bg" src="img/18.jpg" alt="学校后墙">
+            <div class="hotspot" id="hs-trees" style="left:25%;top:42%;">
+                <div class="dot"></div><div class="label">一排老槐树</div>
+            </div>
+            <div class="hotspot" id="hs-dig" style="left:62%;top:68%;">
+                <div class="dot"></div><div class="label">第三棵树下的墙根</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-hide" style="left:8%;top:84%;">
+                <div class="nav-label">← 回牛棚</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：对质 ===== -->
+        <section class="stage" id="stage-confront">
+            <img class="stage-bg" src="img/19.jpg" alt="蓝衣人对质">
+            <div class="hotspot" id="hs-director" style="left:50%;top:48%;">
+                <div class="dot"></div><div class="label">穿蓝衣服的人</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：柴房救人 ===== -->
+        <section class="stage" id="stage-shed">
+            <img class="stage-bg" src="img/20.jpg" alt="柴房">
+            <div class="hotspot" id="hs-ajie" style="left:60%;top:58%;">
+                <div class="dot"></div><div class="label">角落里的身影</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：黎明村口 ===== -->
+        <section class="stage" id="stage-dawn">
+            <img class="stage-bg" src="img/21.jpg" alt="黎明村口">
+        </section>
+    </div>
+
+    <!-- ===== 对话弹窗 ===== -->
+    <div class="modal-overlay" id="dialog-modal">
+        <div class="dialog-box">
+            <div class="dialog-head">
+                <img class="dialog-avatar" id="dialog-avatar" src="" alt="">
+                <div class="dialog-speaker" id="dialog-speaker"></div>
+            </div>
+            <div class="dialog-text" id="dialog-text"></div>
+            <div class="dialog-choices" id="dialog-choices"></div>
+        </div>
+    </div>
+
+    <!-- ===== 笔记本弹窗 ===== -->
+    <div class="modal-overlay" id="note-modal">
+        <div class="note-wrap">
+            <div class="note-page">
+                <p>10月2日。进村的第三天。</p>
+                <p>地下室那些"正"字，我数了，一共是六十七个。六十七天。</p>
+                <p>老校长说得对，那面墙是后砌的。<b>从旗杆数过去第三棵槐树，正对着的墙根</b>——2011年冬天，他们在那里埋了东西，被周小树看见了。</p>
+                <p>墙砌起来的那天，"小树转学"的消息也传开了。</p>
+                <p>蓝衣服每晚都来巡学校。他们不是在找东西。</p>
+                <p>他们是在<b>看守</b>。</p>
+                <p class="note-blood">（这一页的边缘，有一小片暗红色的指印。）</p>
+            </div>
+            <button class="modal-close" id="note-close">合 上</button>
+        </div>
+    </div>
+
+    <!-- ===== 物品查看弹窗 ===== -->
+    <div class="modal-overlay" id="item-modal">
+        <div class="item-box">
+            <div class="item-name" id="item-name"></div>
+            <div class="item-desc" id="item-desc"></div>
+            <button class="modal-close" id="item-close">收 好</button>
+        </div>
+    </div>
+
+    <!-- ===== 黑幕 ===== -->
+    <div id="blackout"></div>
+
+    <!-- ===== 终章结尾卡 ===== -->
+    <div id="end-card">
+        <div class="end-small">邺山迷踪 · 第一部</div>
+        <div class="end-big">完</div>
+        <div class="end-sub" id="end-sub">有些村子，天亮之前不要去。</div>
+        <div class="end-btns">
+            <button onclick="location.href='extra.html'">番外篇 · 他没有转学</button>
+            <button onclick="location.reload()">重玩本章</button>
+            <button onclick="location.href='index.html'">回到序章</button>
+        </div>
+    </div>
+
+    <script src="js/imgloader.js"></script>
+    <script src="js/chapter3.js"></script>
+</body>
+</html>

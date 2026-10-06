@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山迷踪 · 第一章 回村</title>
+    <link rel="stylesheet" href="css/chapter1.css">
+</head>
+<body>
+    <!-- 章节标题卡 -->
+    <div id="title-card">
+        <div class="chapter-num">第一章</div>
+        <div class="chapter-name">回 村</div>
+    </div>
+
+    <div id="game">
+        <!-- 物品栏 -->
+        <div id="inventory-bar">
+            <span class="inv-title">物品</span>
+            <div id="inventory"></div>
+        </div>
+
+        <!-- 底部叙述栏 -->
+        <div id="caption-bar">
+            <p id="caption"></p>
+        </div>
+
+        <!-- ===== 场景：村口 ===== -->
+        <section class="stage" id="stage-village">
+            <img class="stage-bg" src="img/04.jpg" alt="邺山村村口">
+            <div class="hotspot" id="hs-notice" style="left:16%;top:52%;">
+                <div class="dot"></div><div class="label">公告栏</div>
+            </div>
+            <div class="hotspot" id="hs-store" style="left:66%;top:48%;">
+                <div class="dot"></div><div class="label">小卖部</div>
+            </div>
+            <div class="hotspot nav" id="hs-to-school" style="left:47%;top:82%;">
+                <div class="nav-label">往学校方向 →</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：学校大门 ===== -->
+        <section class="stage" id="stage-gate">
+            <img class="stage-bg" src="img/03.jpg" alt="邺山学校大门">
+            <div class="hotspot" id="hs-guardhouse" style="left:14%;top:44%;">
+                <div class="dot"></div><div class="label">门卫室</div>
+            </div>
+            <div class="hotspot" id="hs-lock" style="left:50%;top:58%;">
+                <div class="dot"></div><div class="label">铁门锁</div>
+            </div>
+            <div class="hotspot nav hidden" id="hs-enter-gate" style="left:50%;top:84%;">
+                <div class="nav-label">推开铁门 →</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-village" style="left:8%;top:84%;">
+                <div class="nav-label">← 回村口</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：操场 ===== -->
+        <section class="stage" id="stage-yard">
+            <img class="stage-bg" src="img/31.jpg" alt="学校操场">
+            <div class="hotspot" id="hs-hoop" style="left:28%;top:50%;">
+                <div class="dot"></div><div class="label">篮球架</div>
+            </div>
+            <div class="hotspot hidden" id="hs-brick" style="left:28%;top:76%;">
+                <div class="dot brick"></div><div class="label">松动的砖</div>
+            </div>
+            <div class="hotspot" id="hs-building" style="left:76%;top:42%;">
+                <div class="dot"></div><div class="label">教学楼侧门</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-gate" style="left:8%;top:84%;">
+                <div class="nav-label">← 回大门</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：教学楼走廊（手电） ===== -->
+        <section class="stage" id="stage-corridor">
+            <img class="stage-bg" src="img/05.jpg" alt="教学楼走廊">
+            <div id="dark-mask"></div>
+            <div class="hotspot" id="hs-board" style="left:24%;top:42%;">
+                <div class="dot"></div><div class="label">值日表</div>
+            </div>
+            <div class="hotspot" id="hs-classroom" style="left:58%;top:48%;">
+                <div class="dot"></div><div class="label">教室门</div>
+            </div>
+            <div class="hotspot" id="hs-stairs" style="left:84%;top:66%;">
+                <div class="dot"></div><div class="label">楼梯间</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-yard" style="left:8%;top:84%;">
+                <div class="nav-label">← 回操场</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：三楼西窗 ===== -->
+        <section class="stage" id="stage-window">
+            <img class="stage-bg" src="img/06.jpg" alt="三楼西侧窗户">
+            <div id="dust-layer"></div>
+            <div id="carved-text">他没有转学。<br><span>—— 2011.11</span></div>
+            <div class="hotspot" id="hs-window" style="left:50%;top:50%;">
+                <div class="dot"></div><div class="label">积灰的玻璃</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-corridor" style="left:8%;top:84%;">
+                <div class="nav-label">← 回走廊</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== 对话弹窗 ===== -->
+    <div class="modal-overlay" id="dialog-modal">
+        <div class="dialog-box">
+            <div class="dialog-head">
+                <img class="dialog-avatar" id="dialog-avatar" src="img/07.jpg" alt="老板娘">
+                <div class="dialog-speaker" id="dialog-speaker"></div>
+            </div>
+            <div class="dialog-text" id="dialog-text"></div>
+            <div class="dialog-choices" id="dialog-choices"></div>
+        </div>
+    </div>
+
+    <!-- ===== 公告栏弹窗 ===== -->
+    <div class="modal-overlay" id="notice-modal">
+        <div class="notice-wrap">
+            <div class="paper notice-paper">
+                <h3>邺山小学旧址拆除公告</h3>
+                <p>兹因邺山小学旧址年久失修，存在重大安全隐患，经村委会研究决定，于下月启动拆除工程，原址改建为村民文化广场。</p>
+                <p>本校始建于 <b>1932</b> 年，<b>2013</b> 年撤并封存，特此告知。</p>
+                <p class="sign">邺山村村委会</p>
+                <div class="red-stamp">邺山村</div>
+            </div>
+            <div class="paper missing-paper">
+                <h3>寻人启事</h3>
+                <img class="missing-photo" src="img/08.jpg" alt="陈杰">
+                <p>陈杰（阿杰），男，26岁，身高178cm。9月13日入村后失联，身穿深灰色冲锋衣，背黑色双肩包。</p>
+                <p>有线索者，重谢。</p>
+                <p class="sign">联系电话：138****2661</p>
+            </div>
+            <button class="modal-close" id="notice-close">放 下</button>
+        </div>
+    </div>
+
+    <!-- ===== 密码锁弹窗 ===== -->
+    <div class="modal-overlay" id="lock-modal">
+        <div class="lock-box">
+            <div class="lock-title">四位数字密码锁</div>
+            <div class="lock-hint">锈蚀的锁牌上刻着四个字：「撤校那年」</div>
+            <div class="lock-inputs">
+                <input maxlength="1" inputmode="numeric" class="lock-digit">
+                <input maxlength="1" inputmode="numeric" class="lock-digit">
+                <input maxlength="1" inputmode="numeric" class="lock-digit">
+                <input maxlength="1" inputmode="numeric" class="lock-digit">
+            </div>
+            <div class="lock-error" id="lock-error">锁芯纹丝不动……不对。</div>
+            <div class="lock-btns">
+                <button id="lock-confirm">确 认</button>
+                <button id="lock-cancel">离 开</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 物品查看弹窗 ===== -->
+    <div class="modal-overlay" id="item-modal">
+        <div class="item-box">
+            <div class="item-name" id="item-name"></div>
+            <div class="item-desc" id="item-desc"></div>
+            <button class="modal-close" id="item-close">收 好</button>
+        </div>
+    </div>
+
+    <!-- ===== 黑幕 / 楼顶人影闪帧 ===== -->
+    <div id="blackout"></div>
+    <img id="rooftop-flash" src="img/09.jpg" alt="">
+
+    <!-- ===== 章节结尾卡 ===== -->
+    <div id="end-card">
+        <div class="end-small">第一章 · 完</div>
+        <div class="end-big">第二章 <span>村 夜</span></div>
+        <div class="end-sub">穿蓝衣服的人……是谁？</div>
+        <div class="end-btns">
+            <button onclick="location.href='chapter2.html'">进入第二章</button>
+            <button onclick="location.reload()">重玩本章</button>
+        </div>
+    </div>
+
+    <script src="js/imgloader.js"></script>
+    <script src="js/chapter1.js"></script>
+</body>
+</html>

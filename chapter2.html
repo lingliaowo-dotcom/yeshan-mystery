@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山迷踪 · 第二章 村夜</title>
+    <link rel="stylesheet" href="css/chapter1.css">
+    <link rel="stylesheet" href="css/chapter2.css">
+</head>
+<body>
+    <!-- 章节标题卡 -->
+    <div id="title-card">
+        <div class="chapter-num">第二章</div>
+        <div class="chapter-name">村 夜</div>
+    </div>
+
+    <div id="game">
+        <!-- 物品栏 -->
+        <div id="inventory-bar">
+            <span class="inv-title">物品</span>
+            <div id="inventory"></div>
+        </div>
+
+        <!-- 底部叙述栏 -->
+        <div id="caption-bar">
+            <p id="caption"></p>
+        </div>
+
+        <!-- ===== 场景：村中夜路 ===== -->
+        <section class="stage" id="stage-night-village">
+            <img class="stage-bg" src="img/10.jpg" alt="村中夜路">
+            <div class="hotspot" id="hs-shop-night" style="left:20%;top:50%;">
+                <div class="dot"></div><div class="label">小卖部</div>
+            </div>
+            <div class="hotspot" id="hs-elder-house" style="left:64%;top:44%;">
+                <div class="dot"></div><div class="label">亮灯的屋子</div>
+            </div>
+            <div class="hotspot nav hidden" id="hs-to-gate-night" style="left:47%;top:84%;">
+                <div class="nav-label">去学校 →</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：老校长家 ===== -->
+        <section class="stage" id="stage-room">
+            <img class="stage-bg" src="img/11.jpg" alt="老校长家">
+            <div class="hotspot" id="hs-elder" style="left:50%;top:52%;">
+                <div class="dot"></div><div class="label">油灯旁的老人</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-night" style="left:8%;top:84%;">
+                <div class="nav-label">← 回村里</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：夜里的学校大门 ===== -->
+        <section class="stage" id="stage-gate-night">
+            <img class="stage-bg" src="img/12.jpg" alt="夜里的学校大门">
+            <div class="hotspot" id="hs-gate-night" style="left:50%;top:55%;">
+                <div class="dot"></div><div class="label">白天撬开的铁门</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-village-night" style="left:8%;top:84%;">
+                <div class="nav-label">← 回村里</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：仓库（手电） ===== -->
+        <section class="stage" id="stage-storage">
+            <img class="stage-bg" src="img/13.jpg" alt="学校仓库">
+            <div class="dark-mask" id="mask-storage"></div>
+            <div class="hotspot" id="hs-crowbar" style="left:22%;top:66%;">
+                <div class="dot"></div><div class="label">墙角的撬棍</div>
+            </div>
+            <div class="hotspot" id="hs-ironbox" style="left:56%;top:48%;">
+                <div class="dot"></div><div class="label">生锈的铁盒</div>
+            </div>
+            <div class="hotspot" id="hs-trapdoor" style="left:80%;top:74%;">
+                <div class="dot"></div><div class="label">翘起的地板</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-gate-night" style="left:8%;top:84%;">
+                <div class="nav-label">← 回大门</div>
+            </div>
+        </section>
+
+        <!-- ===== 场景：地下室（手电·更暗） ===== -->
+        <section class="stage" id="stage-basement">
+            <img class="stage-bg" src="img/14.jpg" alt="地下室">
+            <div class="dark-mask darker" id="mask-basement"></div>
+            <div class="hotspot" id="hs-backpack" style="left:30%;top:60%;">
+                <div class="dot"></div><div class="label">黑色双肩包</div>
+            </div>
+            <div class="hotspot" id="hs-wall-marks" style="left:60%;top:38%;">
+                <div class="dot"></div><div class="label">墙上的刻痕</div>
+            </div>
+            <div class="hotspot" id="hs-jar" style="left:78%;top:66%;">
+                <div class="dot"></div><div class="label">小铁罐</div>
+            </div>
+            <div class="hotspot nav" id="hs-back-storage" style="left:8%;top:84%;">
+                <div class="nav-label">← 回仓库</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== 对话弹窗 ===== -->
+    <div class="modal-overlay" id="dialog-modal">
+        <div class="dialog-box">
+            <div class="dialog-head">
+                <img class="dialog-avatar" id="dialog-avatar" src="img/15.jpg" alt="老校长">
+                <div class="dialog-speaker" id="dialog-speaker"></div>
+            </div>
+            <div class="dialog-text" id="dialog-text"></div>
+            <div class="dialog-choices" id="dialog-choices"></div>
+        </div>
+    </div>
+
+    <!-- ===== 物品查看弹窗 ===== -->
+    <div class="modal-overlay" id="item-modal">
+        <div class="item-box">
+            <div class="item-name" id="item-name"></div>
+            <div class="item-desc" id="item-desc"></div>
+            <button class="modal-close" id="item-close">收 好</button>
+        </div>
+    </div>
+
+    <!-- ===== 黑幕 / 追逐闪帧 ===== -->
+    <div id="blackout"></div>
+    <img id="chase-flash" src="img/16.jpg" alt="">
+
+    <!-- ===== 章节结尾卡 ===== -->
+    <div id="end-card">
+        <div class="end-small">第二章 · 完</div>
+        <div class="end-big">第三章 <span>墙里的人</span></div>
+        <div class="end-sub">笔记本最后一页，被血渍浸透了。</div>
+        <div class="end-btns">
+            <button onclick="location.href='chapter3.html'">进入第三章</button>
+            <button onclick="location.reload()">重玩本章</button>
+        </div>
+    </div>
+
+    <script src="js/imgloader.js"></script>
+    <script src="js/chapter2.js"></script>
+</body>
+</html>
