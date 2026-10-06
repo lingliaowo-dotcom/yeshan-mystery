@@ -1,172 +1,102 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>云岭迷踪</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云岭迷踪</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Noto Serif SC', serif;
+      background: #0d0f14;
+      color: #d4d4d4;
+    }
+
+    .cover-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: url('https://image.pollinations.ai/prompt/dark%20misty%20village%20landscape%20at%20pre-dawn%20silhouetted%20Chinese%20rural%20school%20buildings%20in%20fog%20deep%20teal%20and%20black%20color%20palette%20cinematic%20mystery%20atmosphere%20no%20text%20no%20people%20wide%20angle%2016:9?width=1920&height=1080&seed=77&nologo=true') center/cover no-repeat;
+      opacity: 0.45;
+      z-index: 1;
+    }
+    .cover-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(ellipse at center, rgba(13,15,20,0.3) 0%, rgba(13,15,20,0.85) 70%, rgba(13,15,20,1) 100%);
+      z-index: 2;
+    }
+
+    .cover-content {
+      position: relative; z-index: 10;
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+
+    .title-img {
+      width: min(720px, 90vw);
+      filter: invert(1) brightness(1.15) drop-shadow(0 0 18px rgba(255,255,255,0.15));
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1.2s ease-out 0.3s forwards;
+    }
+
+    .subtitle {
+      margin-top: 1.2rem;
+      font-size: 1.05rem;
+      letter-spacing: 0.35em;
+      color: #7a7a7a;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 1.1s forwards;
+    }
+
+    .start-btn {
+      margin-top: 3.5rem;
+      padding: 0.9rem 3.2rem;
+      font-size: 1.15rem;
+      font-family: 'Noto Serif SC', serif;
+      letter-spacing: 0.25em;
+      color: #c9b8a0;
+      background: transparent;
+      border: 1px solid rgba(201,184,160,0.35);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 1.6s forwards;
+    }
+    .start-btn:hover {
+      background: rgba(201,184,160,0.08);
+      border-color: rgba(201,184,160,0.65);
+      box-shadow: 0 0 20px rgba(201,184,160,0.12);
+      transform: translateY(-2px);
+    }
+
+    .hint {
+      position: absolute; bottom: 2rem;
+      font-size: 0.75rem;
+      color: #555;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 2.2s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-    <div id="game-container">
-        <!-- 场景1：手机桌面 -->
-        <div class="scene active" id="scene-1">
-            <div class="phone-frame">
-                <div class="status-bar">
-                    <span>14:32</span>
-                    <span>5G ▓▓░</span>
-                </div>
-                <div class="desktop">
-                    <div class="app-icon" id="weibo-app">
-                        <div class="app-logo weibo">微</div>
-                        <span>微博</span>
-                    </div>
-                </div>
-                <div class="hint-text">上班摸鱼中……点开微博刷刷热搜吧</div>
-            </div>
-        </div>
+  <div class="cover-bg"></div>
+  <div class="cover-overlay"></div>
 
-        <!-- 场景2：微博热搜 -->
-        <div class="scene" id="scene-2">
-            <div class="phone-frame">
-                <div class="status-bar">
-                    <span>14:33</span>
-                    <span>5G ▓▓░</span>
-                </div>
-                <div class="weibo-header">
-                    <div class="back-btn">&lt;</div>
-                    <div class="weibo-logo">微博热搜</div>
-                    <div class="refresh-btn">⟳</div>
-                </div>
-                <div class="hot-search-list">
-                    <div class="hot-item rank-1">
-                        <span class="rank">1</span>
-                        <span class="title">某明星恋情曝光</span>
-                        <span class="tag hot">爆</span>
-                    </div>
-                    <div class="hot-item rank-2">
-                        <span class="rank">2</span>
-                        <span class="title">新片票房破10亿</span>
-                        <span class="tag hot">热</span>
-                    </div>
-                    <div class="hot-item rank-3" id="target-news">
-                        <span class="rank">3</span>
-                        <span class="title">云岭村废弃学校惊现……</span>
-                        <span class="tag new">新</span>
-                    </div>
-                    <div class="hot-item">
-                        <span class="rank">4</span>
-                        <span class="title">国庆节调休安排</span>
-                        <span class="tag">沸</span>
-                    </div>
-                    <div class="hot-item">
-                        <span class="rank">5</span>
-                        <span class="title">台风路径最新预报</span>
-                        <span class="tag">热</span>
-                    </div>
-                    <div class="hot-item">
-                        <span class="rank">6</span>
-                        <span class="title">某品牌致歉声明</span>
-                        <span class="tag">新</span>
-                    </div>
-                </div>
-                <div class="hint-text">有一条热搜，让你心头一紧……</div>
-            </div>
-        </div>
-
-        <!-- 场景3：新闻详情 -->
-        <div class="scene" id="scene-3">
-            <div class="phone-frame">
-                <div class="status-bar">
-                    <span>14:33</span>
-                    <span>5G ▓▓░</span>
-                </div>
-                <div class="weibo-header">
-                    <div class="back-btn" id="back-to-hot">&lt;</div>
-                    <div class="weibo-logo">新闻详情</div>
-                </div>
-                <div class="news-content">
-                    <h1 class="news-title">云岭村废弃学校惊现不明痕迹，警方介入调查</h1>
-                    <div class="news-meta">
-                        <span class="source">云岭日报</span>
-                        <span class="time">10分钟前</span>
-                    </div>
-                    <div class="news-body">
-                        <p>今日上午，有村民在云岭村废弃中学发现异常痕迹。该校已关闭多年，但近期频频有村民反映夜间听到校内传出异响。</p>
-                        <p>记者赶到现场时，看到校舍围墙斑驳，篮球架锈迹斑斑。在教学楼角落处，发现了一些<strong>可疑的痕迹</strong>……</p>
-                        <div class="news-image-container" id="news-img-container">
-                            <img class="news-image" src="img/01.jpg" alt="现场照片">
-                            <p class="image-caption">废弃的云岭学校操场（记者 摄）· 点击查看大图</p>
-                        </div>
-                        <p>警方已封锁现场，案件正在进一步调查中。有知情人士透露，近日曾有一名年轻男子独自进入该村，至今下落不明。</p>
-                        <p>「那地方邪门得很，」一位不愿透露姓名的村民说，「晚上千万别靠近。」</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 场景4：照片放大 -->
-        <div class="scene" id="scene-4">
-            <div class="image-zoom-overlay">
-                <div class="zoom-image" id="zoom-image">
-                    <img class="zoom-photo" src="img/01.jpg" alt="放大的现场照片">
-                    <div class="red-circle-hint" id="red-circle"></div>
-                </div>
-                <div class="zoom-hint" id="zoom-hint">点击照片任意处放大……角落里似乎有什么东西？</div>
-                <div class="close-zoom" id="close-zoom">✕</div>
-            </div>
-        </div>
-
-        <!-- 场景5：发现线索 -->
-        <div class="scene" id="scene-5">
-            <div class="clue-discovery">
-                <div class="clue-image">
-                    <img class="clue-photo" src="img/30.jpg" alt="窗户后的身影">
-                </div>
-                <div class="clue-text" id="clue-text"></div>
-            </div>
-        </div>
-
-        <!-- 场景6：记忆闪回 -->
-        <div class="scene" id="scene-6">
-            <div class="memory-flashback">
-                <div class="flashback-layer" id="flashback-layer">
-                    <img class="memory-photo" src="img/02.jpg" alt="记忆中的学校">
-                </div>
-                <div class="memory-text" id="memory-text"></div>
-                <div class="vignette"></div>
-            </div>
-        </div>
-
-        <!-- 场景7：悬念收尾 -->
-        <div class="scene" id="scene-7">
-            <div class="ending-sequence">
-                <div class="fade-from-white" id="white-fade"></div>
-                <div class="final-phone">
-                    <div class="phone-frame">
-                        <div class="status-bar">
-                            <span>14:35</span>
-                            <span>5G ▓▓░</span>
-                        </div>
-                        <div class="chat-interface">
-                            <div class="chat-header">阿杰</div>
-                            <div class="chat-messages" id="chat-history"></div>
-                            <div class="typing-indicator" id="typing">对方正在输入……</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="final-choice" id="final-choice" style="display:none;">
-                    <p>阿杰最后的信息，始终萦绕在你心头。</p>
-                    <p class="final-message">「云岭村……别来。但如果三天后我没消息，<br>去老教学楼三楼，窗户上有答案。」</p>
-                    <div class="choice-buttons">
-                        <button class="choice-btn" id="btn-go">去云岭村</button>
-                        <button class="choice-btn" id="btn-wait">再等等</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/imgloader.js"></script>
-    <script src="js/main.js"></script>
+  <div class="cover-content">
+    <img src="img/cover-title.jpeg" alt="云岭迷踪" class="title-img">
+    <div class="subtitle">一款网页悬疑解谜游戏</div>
+    <button class="start-btn" onclick="location.href='prologue.html'">开始游戏</button>
+    <div class="hint">建议佩戴耳机 · 全屏体验</div>
+  </div>
 </body>
 </html>
